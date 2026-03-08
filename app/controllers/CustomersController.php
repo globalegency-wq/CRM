@@ -5,7 +5,7 @@
  Version: 8.1
  License: MIT Open Source License
  Developed & Maintained By: PHPCRM (https://www.phpcrm.com)
- 
+
  Description:
  PHPCRM is an open-source Customer Relationship Management system 
  designed for businesses of all sizes to manage Leads, Customers, 
@@ -30,7 +30,7 @@
  Website: https://www.phpcrm.com
  Last Update: 29-11-2025
 =======================================================================
-*/		
+*/
 // app/controllers/CustomersController.php
 
 require_once __DIR__ . '/../core/Controller.php';
@@ -60,29 +60,44 @@ class CustomersController extends Controller
         $users = $customers;
 
         $successMsg = $_SESSION['customer_success'] ?? '';
-        $errorMsg   = $_SESSION['customer_error'] ?? '';
+        $errorMsg = $_SESSION['customer_error'] ?? '';
         unset($_SESSION['customer_success'], $_SESSION['customer_error']);
 
         $this->view('customers/index', [
-            'customers'  => $customers,
-            'users'      => $users,
+            'customers' => $customers,
+            'users' => $users,
             'successMsg' => $successMsg,
-            'errorMsg'   => $errorMsg,
+            'errorMsg' => $errorMsg,
         ]);
     }
 
     // Show add form (GET)
     public function create()
     {
-        $errorMsg   = $_SESSION['add_customer_error']   ?? '';
+        $name = $old['name'] ?? '';
+        $email = $old['email'] ?? '';
+        $phone = $old['phone'] ?? '';
+        $company_name = $old['company_name'] ?? '';
+        $role = $old['company_reg_no'] ?? '';
+        $request = $old['C_tax_number_declare'] ?? '';
+        $name = $old['C_tax_number_date'] ?? '';
+        $email = $old['C_identity_number'] ?? '';
+        $phone = $old['C_identity_declare'] ?? '';
+        $company_name = $old['C_identity_date'] ?? '';
+        $role = $old['company_address'] ?? '';
+        $request = $old['role'] ?? '';
+        $role = $old['request'] ?? '';
+        $request = $old['user_status'] ?? '';
+
+        $errorMsg = $_SESSION['add_customer_error'] ?? '';
         $successMsg = $_SESSION['add_customer_success'] ?? '';
-        $old        = $_SESSION['add_customer_old']     ?? [];
+        $old = $_SESSION['add_customer_old'] ?? [];
         unset($_SESSION['add_customer_error'], $_SESSION['add_customer_success'], $_SESSION['add_customer_old']);
 
         $this->view('customers/create', [
-            'errorMsg'   => $errorMsg,
+            'errorMsg' => $errorMsg,
             'successMsg' => $successMsg,
-            'old'        => $old,
+            'old' => $old,
         ]);
     }
 
@@ -94,64 +109,63 @@ class CustomersController extends Controller
         }
 
         $data = [
-            'name'             => trim($_POST['name'] ?? ''),
-            'email'            => trim($_POST['email'] ?? ''),
-            'phone'            => trim($_POST['phone'] ?? ''),
-             'company_name'     => trim($_POST['company_name'] ?? ''),
-            'company_reg_no'   => trim($_POST['company_reg_no'] ?? ''),
-             'C_tax_number_declare'  => trim($_POST['C_tax_number_declare'] ?? ''),
-            'C_tax_number_date'  => trim($_POST['C_tax_number_date'] ?? ''),
+            'name' => trim($_POST['name'] ?? ''),
+            'email' => trim($_POST['email'] ?? ''),
+            'phone' => trim($_POST['phone'] ?? ''),
+            'company_name' => trim($_POST['company_name'] ?? ''),
+            'company_reg_no' => trim($_POST['company_reg_no'] ?? ''),
+            'C_tax_number_declare' => trim($_POST['C_tax_number_declare'] ?? ''),
+            'C_tax_number_date' => trim($_POST['C_tax_number_date'] ?? ''),
             //  'P_tax_number_declare'  => trim($_POST['P_tax_number_declare'] ?? ''),
             // 'P_tax_number_date'  => trim($_POST['P_tax_number_date'] ?? ''),
             // 'Provider_phone'  => trim($_POST['Provider_phone'] ?? ''),
-    
+
             // 'Customer_actor'  => trim($_POST['Customer_actor'] ?? ''),
-             'C_identity_number'  => trim($_POST['C_identity_number'] ?? ''),
-             'C_identity_declare'  => trim($_POST['C_identity_declare'] ?? ''),
-             'C_identity_date'  => trim($_POST['C_identity_date'] ?? ''),
+            'C_identity_number' => trim($_POST['C_identity_number'] ?? ''),
+            'C_identity_declare' => trim($_POST['C_identity_declare'] ?? ''),
+            'C_identity_date' => trim($_POST['C_identity_date'] ?? ''),
             // 'C_address'  => trim($_POST['C_address'] ?? ''),
             // 'C_phone'  => trim($_POST['C_phone'] ?? ''),
-           
-            'company_address'  => trim($_POST['company_address'] ?? ''),
-           
-           // 'country'          => trim($_POST['country'] ?? ''),
-            'role'             => trim($_POST['role'] ?? ''),
-            'request'             => trim($_POST['request'] ?? ''),
-          //  'employees'        => trim($_POST['employees'] ?? ''),
-            'user_status'      => trim($_POST['user_status'] ?? 'نشط'),
+
+            'company_address' => trim($_POST['company_address'] ?? ''),
+
+            // 'country'          => trim($_POST['country'] ?? ''),
+            'role' => trim($_POST['role'] ?? ''),
+            'request' => trim($_POST['request'] ?? ''),
+            //  'employees'        => trim($_POST['employees'] ?? ''),
+            'user_status' => trim($_POST['user_status'] ?? 'نشط'),
         ];
 
         $_SESSION['add_customer_old'] = $data;
 
         // Validation
         if (
-            !$data['name'] || 
-           //!$data['email'] ||
-            !$data['phone'] || 
-            
+            !$data['name'] ||
+            //!$data['email'] ||
+            !$data['phone'] ||
+
             // !$data['P_tax_number_declare']||
             // !$data['P_tax_number_date']||
             // !$data['Customer_actor']||
-      
+
             // !$data['C_address']||
             // !$data['C_phone']||
- 
+
             !$data['company_name'] ||
-          // !$data['company_reg_no'] ||
-         //    !$data['C_tax_number_declare']||
-         //   !$data['C_tax_number_date']||
-             //     !$data['C_identity_number']||
-          //   !$data['C_identity_declare']||
-           //  !$data['C_identity_date']||
-            !$data['company_address']  ||
-            !$data['role']||
+            // !$data['company_reg_no'] ||
+            //    !$data['C_tax_number_declare']||
+            //   !$data['C_tax_number_date']||
+            //     !$data['C_identity_number']||
+            //   !$data['C_identity_declare']||
+            //  !$data['C_identity_date']||
+            !$data['company_address'] ||
+            !$data['role'] ||
             !$data['request']
-        )
-         {
-            $_SESSION['add_customer_error'] = 'كل الحقول مطلوبة.';
+        ) {
+            $_SESSION['add_customer_error'] = 'الحقول الأساسية مطلوبة (اسم العميل، الهاتف،اسم الشركة، عنوان الشركة، المنصب، الاستفسار).';
             $this->redirect('customers.php?a=create');
         }
-        
+
 
         // if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
         //     $_SESSION['add_customer_error'] = 'صيغة الايميل غير صحيحة.';
@@ -165,32 +179,32 @@ class CustomersController extends Controller
         // }
 
         $insert = [
-            'customer_code'  => 'CUST-' . str_pad((string)rand(1,9999), 4, '0', STR_PAD_LEFT),
-            'name'           => $data['name'],
-            'email'          => $data['email'],
-           'phone'          => $data['phone'],
-            'company_name'   => $data['company_name'],
+            'customer_code' => 'CUST-' . str_pad((string) rand(1, 9999), 4, '0', STR_PAD_LEFT),
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'company_name' => $data['company_name'],
             'company_reg_no' => $data['company_reg_no'],
-              'C_tax_number_declare'  =>$data['C_tax_number_declare'],
-            'C_tax_number_date'  =>$data['C_tax_number_date'],
+            'C_tax_number_declare' => $data['C_tax_number_declare'],
+            'C_tax_number_date' => $data['C_tax_number_date'],
             //  'P_tax_number_declare' =>$data['P_tax_number_declare'],
             // 'P_tax_number_date'  =>$data['P_tax_number_date'],
             // 'Provider_phone'  =>$data['Provider_phone'],
-          
+
             // 'Customer_actor'  =>$data['Customer_actor'],
-            'C_identity_number'  =>$data['C_identity_number'],
-             'C_identity_declare' =>$data['C_identity_declare'],
-            'C_identity_date'  =>$data['C_identity_date'],
+            'C_identity_number' => $data['C_identity_number'],
+            'C_identity_declare' => $data['C_identity_declare'],
+            'C_identity_date' => $data['C_identity_date'],
             // 'C_address'  =>$data['C_address'],
             // 'C_phone'  =>$data['C_phone'],
-           
-            'company_address'=> $data['company_address'],
-            
-           // 'country'        => $data['country'],
-            'role'           => $data['role'],
-            'request'           => $data['request'],
-           // 'employees'      => $data['employees'],
-            'user_status'    => $data['user_status'],
+
+            'company_address' => $data['company_address'],
+
+            // 'country'        => $data['country'],
+            'role' => $data['role'],
+            'request' => $data['request'],
+            // 'employees'      => $data['employees'],
+            'user_status' => $data['user_status'],
         ];
 
         if ($this->customer->create($insert)) {
@@ -202,13 +216,13 @@ class CustomersController extends Controller
         $_SESSION['add_customer_error'] = 'خطأ في عملية اضافة العميل.';
         $this->redirect('customers.php?a=create');
     }
-//     public function store()
+    //     public function store()
 // {
 //     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 //         $this->redirect('customers.php?a=create');
 //     }
 
-//     $data = [
+    //     $data = [
 //         'name'                 => trim($_POST['name'] ?? ''),
 //         'email'                => trim($_POST['email'] ?? ''),
 //         'phone'                => trim($_POST['phone'] ?? ''),
@@ -225,16 +239,16 @@ class CustomersController extends Controller
 //         'user_status'          => trim($_POST['user_status'] ?? 'نشط'),
 //     ];
 
-//     $_SESSION['add_customer_old'] = $data;
+    //     $_SESSION['add_customer_old'] = $data;
 
-//     // مصفوفة بالحقول الإلزامية فقط
+    //     // مصفوفة بالحقول الإلزامية فقط
 //     $required_fields = [
 //         'name', 'email', 'phone', 'company_name', 'company_reg_no', 
 //         'C_tax_number_declare', 'C_tax_number_date', 'C_identity_number', 
 //         'C_identity_declare', 'C_identity_date', 'company_address', 'role', 'request'
 //     ];
 
-//     foreach ($required_fields as $field) {
+    //     foreach ($required_fields as $field) {
 //         if (empty($data[$field])) {
 //             $_SESSION['add_customer_error'] = "الحقل ($field) مطلوب.";
 //             $this->redirect('customers.php?a=create');
@@ -242,12 +256,12 @@ class CustomersController extends Controller
 //         }
 //     }
 
-//     // إذا وصل الكود هنا، يعني أن جميع الحقول ممتلئة
+    //     // إذا وصل الكود هنا، يعني أن جميع الحقول ممتلئة
 //     $insert = $data;
 //     // إضافة الكود العشوائي
 //     $insert['customer_code'] = 'CUST-' . str_pad((string)rand(1, 9999), 4, '0', STR_PAD_LEFT);
 
-//     if ($this->customer->create($insert)) {
+    //     if ($this->customer->create($insert)) {
 //         $_SESSION['add_customer_success'] = 'تم اضافة العميل بنجاح.';
 //         $_SESSION['add_customer_old'] = [];
 //         $this->redirect('customers.php?a=create');
@@ -256,95 +270,98 @@ class CustomersController extends Controller
 //         $this->redirect('customers.php?a=create');
 //     }
 // }
-	
-	
-	
-public function edit()
-{
-    $id = $_GET['id'] ?? 0;
-    if (!$id) return $this->redirect('customers.php?a=index');
 
-    $customer = $this->customer->find($id);
-    if (!$customer) return $this->redirect('customers.php?a=index');
 
-    $errorMsg   = $_SESSION['edit_customer_error'] ?? '';
-    $successMsg = $_SESSION['edit_customer_success'] ?? '';
-    unset($_SESSION['edit_customer_error'], $_SESSION['edit_customer_success']);
 
-    $this->view('customers/edit', [
-        'customer'   => $customer,
-        'errorMsg'   => $errorMsg,
-        'successMsg' => $successMsg
-    ]);
-}
-	
-public function update()
-{
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    public function edit()
+    {
+        $id = $_GET['id'] ?? 0;
+        if (!$id)
+            return $this->redirect('customers.php?a=index');
+
+        $customer = $this->customer->find($id);
+        if (!$customer)
+            return $this->redirect('customers.php?a=index');
+
+        $errorMsg = $_SESSION['edit_customer_error'] ?? '';
+        $successMsg = $_SESSION['edit_customer_success'] ?? '';
+        unset($_SESSION['edit_customer_error'], $_SESSION['edit_customer_success']);
+
+        $this->view('customers/edit', [
+            'customer' => $customer,
+            'errorMsg' => $errorMsg,
+            'successMsg' => $successMsg
+        ]);
+    }
+
+    public function update()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            return $this->redirect('customers.php?a=index');
+        }
+
+        $id = $_POST['id'] ?? 0;
+        if (!$id)
+            return $this->redirect('customers.php?a=index');
+
+        $data = [
+            'name' => trim($_POST['name']),
+            'email' => trim($_POST['email']),
+            'phone' => trim($_POST['phone']),
+            'company_name' => trim($_POST['company_name']),
+            'company_reg_no' => trim($_POST['company_reg_no']),
+            'C_tax_number_declare' => trim($_POST['C_tax_number_declare'] ?? ''),
+            'C_tax_number_date' => trim($_POST['C_tax_number_date'] ?? ''),
+            //  'P_tax_number_declare'  => trim($_POST['P_tax_number_declare'] ?? ''),
+            //     'P_tax_number_date'  => trim($_POST['P_tax_number_date'] ?? ''),
+            //     'Provider_phone'  => trim($_POST['Provider_phone'] ?? ''),
+
+            // 'Customer_actor'  => trim($_POST['Customer_actor'] ?? ''),
+            'C_identity_number' => trim($_POST['C_identity_number'] ?? ''),
+            'C_identity_declare' => trim($_POST['C_identity_declare'] ?? ''),
+            'C_identity_date' => trim($_POST['C_identity_date'] ?? ''),
+            // 'C_address'  => trim($_POST['C_address'] ?? ''),
+            // 'C_phone'  => trim($_POST['C_phone'] ?? ''),
+
+            'company_address' => trim($_POST['company_address']),
+            //  'country'         => trim($_POST['country']),
+            'role' => trim($_POST['role']),
+            //  'employees'       => trim($_POST['employees']),
+            'request' => trim($_POST['request']),
+            'user_status' => trim($_POST['user_status']),
+        ];
+
+        if ($this->customer->update($id, $data)) {
+            $_SESSION['edit_customer_success'] = 'تم تحديث بيانات العميل بنجاح.';
+        } else {
+            $_SESSION['edit_customer_error'] = 'خطأ في عملية تحديث بيانات العميل.';
+        }
+
+        return $this->redirect('customers.php?a=edit&id=' . $id);
+    }
+
+
+    public function delete()
+    {
+        $id = $_GET['id'] ?? 0;
+        if ($id && $this->customer->delete($id)) {
+            $_SESSION['customer_success'] = 'تم حذف العميل بنجاح.';
+        } else {
+            $_SESSION['customer_error'] = 'خطأ في عملية حذف العميل.';
+        }
         return $this->redirect('customers.php?a=index');
     }
 
-    $id = $_POST['id'] ?? 0;
-    if (!$id) return $this->redirect('customers.php?a=index');
-
-    $data = [
-        'name'            => trim($_POST['name']),
-        'email'           => trim($_POST['email']),
-        'phone'           => trim($_POST['phone']),
-         'company_name'    => trim($_POST['company_name']),
-        'company_reg_no'  => trim($_POST['company_reg_no']),
-              'C_tax_number_declare'  => trim($_POST['C_tax_number_declare'] ?? ''),
-            'C_tax_number_date'  => trim($_POST['C_tax_number_date'] ?? ''),
-        //  'P_tax_number_declare'  => trim($_POST['P_tax_number_declare'] ?? ''),
-        //     'P_tax_number_date'  => trim($_POST['P_tax_number_date'] ?? ''),
-        //     'Provider_phone'  => trim($_POST['Provider_phone'] ?? ''),
-      
-            // 'Customer_actor'  => trim($_POST['Customer_actor'] ?? ''),
-             'C_identity_number'  => trim($_POST['C_identity_number'] ?? ''),
-             'C_identity_declare'  => trim($_POST['C_identity_declare'] ?? ''),
-             'C_identity_date'  => trim($_POST['C_identity_date'] ?? ''),
-            // 'C_address'  => trim($_POST['C_address'] ?? ''),
-            // 'C_phone'  => trim($_POST['C_phone'] ?? ''),
-       
-        'company_address' => trim($_POST['company_address']),
-      //  'country'         => trim($_POST['country']),
-        'role'            => trim($_POST['role']),
-      //  'employees'       => trim($_POST['employees']),
-      'request'           =>  trim($_POST['request']),
-        'user_status'          => trim($_POST['user_status']),
-    ];
-
-    if ($this->customer->update($id, $data)) {
-        $_SESSION['edit_customer_success'] = 'تم تحديث بيانات العميل بنجاح.';
-    } else {
-        $_SESSION['edit_customer_error'] = 'خطأ في عملية تحديث بيانات العميل.';
-    }
-
-    return $this->redirect('customers.php?a=edit&id=' . $id);
-}
 
 
-public function delete()
-{
-    $id = $_GET['id'] ?? 0;
-    if ($id && $this->customer->delete($id)) {
-        $_SESSION['customer_success'] = 'تم حذف العميل بنجاح.';
-    } else {
-        $_SESSION['customer_error'] = 'خطأ في عملية حذف العميل.';
-    }
-    return $this->redirect('customers.php?a=index');
-}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 }
