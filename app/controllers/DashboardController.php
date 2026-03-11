@@ -61,6 +61,20 @@ class DashboardController
     public function index()
     {
         // Top stats
+        // جلب عدد العملاء النشطين
+// جلب عدد العملاء النشطين - استخدمنا conn بدلاً من db
+    $activeCount = 0;
+    $resActive = $this->conn->query("SELECT COUNT(*) as total FROM phpcrm_customers WHERE user_status = 'نشط'");
+    if ($resActive) {
+        $activeCount = $resActive->fetch_assoc()['total'];
+    }
+
+    // جلب عدد العملاء الخاملين
+    $inactiveCount = 0;
+    $resInactive = $this->conn->query("SELECT COUNT(*) as total FROM phpcrm_customers WHERE user_status = 'خامل'");
+    if ($resInactive) {
+        $inactiveCount = $resInactive->fetch_assoc()['total'];
+    }
         $totalCustomers = $this->getSingleInt("SELECT COUNT(*) FROM phpcrm_customers");
         $totalLeads     = $this->getSingleInt("SELECT COUNT(*) FROM phpcrm_leads");
         $pendingTasks   = $this->getSingleInt("SELECT COUNT(*) FROM phpcrm_tasks WHERE status = 'pending'");
@@ -110,8 +124,22 @@ class DashboardController
             }
             $res->free();
         }
+// جلب أكثر 5 طلبات تكراراً
+$topRequests = [];
+$sqlRequests = "SELECT request, COUNT(*) as count FROM phpcrm_customers GROUP BY request ORDER BY count DESC LIMIT 5";
+if ($resReq = $this->conn->query($sqlRequests)) {
+    while ($row = $resReq->fetch_assoc()) {
+        $topRequests[] = $row;
+    }
+    $resReq->free();
+}
 
+// تجهيز البيانات للمخطط (Labels and Data)
+$reqLabels = array_column($topRequests, 'request');
+$reqData = array_column($topRequests, 'count');
+
+// تمرير البيانات لملف العرض
+include __DIR__ . '/../views/dashboard/index.php';
         // Include view
-        include __DIR__ . '/../views/dashboard/index.php';
     }
 }

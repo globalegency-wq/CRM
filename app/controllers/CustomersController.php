@@ -38,6 +38,7 @@ require_once __DIR__ . '/../models/Customer.php';
 
 class CustomersController extends Controller
 {
+
     protected $customer;
 
     public function __construct($conn)
@@ -151,15 +152,15 @@ class CustomersController extends Controller
             // !$data['C_address']||
             // !$data['C_phone']||
 
-            !$data['company_name'] ||
+          //  !$data['company_name'] ||
             // !$data['company_reg_no'] ||
             //    !$data['C_tax_number_declare']||
             //   !$data['C_tax_number_date']||
             //     !$data['C_identity_number']||
             //   !$data['C_identity_declare']||
             //  !$data['C_identity_date']||
-            !$data['company_address'] ||
-            !$data['role'] ||
+          //  !$data['company_address'] ||
+          //  !$data['role'] ||
             !$data['request']
         ) {
             $_SESSION['add_customer_error'] = 'الحقول الأساسية مطلوبة (اسم العميل، الهاتف،اسم الشركة، عنوان الشركة، المنصب، الاستفسار).';

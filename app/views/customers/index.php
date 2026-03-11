@@ -1,5 +1,7 @@
-<?php include __DIR__ . '/../../includes/header.php'; ?>
+<?php include __DIR__ . '/../../includes/header.php';
 
+
+?>
 <style>
 /* تنسيقات لإصلاح قص الصفحة وعرض الأعمدة */
 .content-area {
@@ -167,6 +169,11 @@
                 <tbody>
                     <?php if (count($users) > 0): ?>
                     <?php foreach ($users as $user): ?>
+                    <?php
+                            // إعداد رسالة الواتساب الذكية داخل الحلقة لكل عميل
+                            $message = " مرحباً معاكم جلوبال اجنسي، حابين نتأكد إذا لا زلت مهتم بالخدمة أو تحتاج اي توضيح";
+                            $wa_link = "https://wa.me/" . preg_replace('/[^0-9]/', '', $user['phone']) . "?text=" . urlencode($message);
+                            ?>
                     <tr>
                         <td><?= htmlspecialchars($user['id']) ?></td>
                         <td><?= htmlspecialchars($user['name']) ?></td>
@@ -185,6 +192,9 @@
                                     case 'خامل':
                                         $statusClass = 'danger';
                                         break;
+                                         case 'محتمل':
+                                        $statusClass = 'warning';
+                                        break;
                                 }
                                 ?>
                             <span class="badge bg-<?= $statusClass ?>"><?= ucfirst($user['user_status']) ?></span>
@@ -198,6 +208,11 @@
                             <a href="customers.php?a=delete&id=<?= urlencode($user['id']) ?>"
                                 class="btn btn-sm btn-danger"
                                 onclick="return confirm('هل تريد بالتأكيد من حذف هذا العميل?');">حذف</a>
+
+                            <a style="margin-top: 10px;=" href="<?= $wa_link ?>" target="_blank"
+                                class="btn btn-success btn-sm">
+                                <i class="fab fa-whatsapp"></i> متابعة الآن
+                            </a>
 
                         </td>
                     </tr>

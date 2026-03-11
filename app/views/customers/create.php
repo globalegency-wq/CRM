@@ -30,7 +30,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="role" class="form-label">المنصب</label>
-                            <input type="text" class="form-control" id="role" name="role" required
+                            <input type="text" class="form-control" id="role" name="role"
                                 value="<?= htmlspecialchars($role ?? '') ?>">
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="company_name" class="form-label">اسم الشركة</label>
-                            <input type="text" class="form-control" id="company_name" name="company_name" required
+                            <input type="text" class="form-control" id="company_name" name="company_name"
                                 value="<?= htmlspecialchars($company_name ?? '') ?>">
                         </div>
                     </div>
@@ -65,7 +65,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="company_address" class="form-label">عنوان الشركة</label>
-                            <input type="text" class="form-control" id="company_address" name="company_address" required
+                            <input type="text" class="form-control" id="company_address" name="company_address"
                                 value="<?= htmlspecialchars($company_address ?? '') ?>">
                         </div>
                     </div>
@@ -156,6 +156,7 @@
                     <select name="user_status" id="user_status" class="form-select" required>
                         <option value="نشط">نشط</option>
                         <option value="خامل">خامل</option>
+                        <option value="محتمل">محتمل</option>
                     </select>
                 </div>
 

@@ -29,7 +29,7 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">المنصب</label>
-                            <input type="text" class="form-control" name="role" required
+                            <input type="text" class="form-control" name="role"
                                 value="<?= htmlspecialchars($customer['role']) ?>">
                         </div>
                     </div>
@@ -55,14 +55,14 @@
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">اسم الشركة</label>
-                            <input type="text" class="form-control" name="company_name" required
+                            <input type="text" class="form-control" name="company_name"
                                 value="<?= htmlspecialchars($customer['company_name']) ?>">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label class="form-label">عنوان الشركة</label>
-                            <input type="text" class="form-control" name="company_address" rows="3" required
+                            <input type="text" class="form-control" name="company_address" rows="3"
                                 value="<?= htmlspecialchars($customer['company_address']) ?>">
                         </div>
                     </div>
@@ -156,6 +156,8 @@
                         <option value="نشط" <?= $customer['user_status'] == 'نشط' ? 'selected' : '' ?>>نشط
                         </option>
                         <option value="خامل" <?= $customer['user_status'] == 'خامل' ? 'selected' : '' ?>>خامل
+                        </option>
+                        <option value="محتمل" <?= $customer['user_status'] == 'محتمل' ? 'selected' : '' ?>>محتمل
                         </option>
                     </select>
                 </div>
